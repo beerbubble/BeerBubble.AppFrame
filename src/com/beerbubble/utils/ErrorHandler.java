@@ -1,6 +1,8 @@
-package com.beerbubble.application;
+package com.beerbubble.utils;
 
 import java.lang.Thread.UncaughtExceptionHandler;
+
+import com.beerbubble.application.BeerBubbleApplication;
 
 import android.annotation.TargetApi;
 import android.content.Context;

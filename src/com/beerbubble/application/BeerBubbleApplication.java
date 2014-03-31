@@ -2,6 +2,9 @@ package com.beerbubble.application;
 
 import java.util.LinkedList;
 
+import com.beerbubble.utils.ErrorHandler;
+import com.beerbubble.utils.SharedPreferenceManager;
+
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -9,19 +12,30 @@ import android.content.Context;
 public class BeerBubbleApplication extends Application {
 
 	private static BeerBubbleApplication beerBubbleApplicationInstance;
-	private static ErrorHandler crashHandler = null;
+	private static ErrorHandler crashHandler = ErrorHandler.getInstance();;
 	private static LinkedList<Activity> activityList = new LinkedList<Activity>();
+	
+	/** 全局的SharedPreferences */
+    private SharedPreferenceManager prefsManager;
+
 
 	public void onCreate() {
 		super.onCreate();
 		BeerBubbleApplication.beerBubbleApplicationInstance = this;
-		BeerBubbleApplication.crashHandler = ErrorHandler.getInstance();
+		BeerBubbleApplication.setCrashHandler(this);
+		prefsManager = new SharedPreferenceManager(this);
 	}
 
 	public static BeerBubbleApplication getInstance() {
 		return BeerBubbleApplication.beerBubbleApplicationInstance;
 	}
-
+	
+    /** 全局的SharedPreference */
+    public SharedPreferenceManager getPrefsManager()
+    {
+        return this.prefsManager;
+    }
+	
 	public static void addToActivityList(final Activity act) {
 		BeerBubbleApplication.activityList.add(act);
 	}
